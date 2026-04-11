@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aaron's 40th Rodeo</title>
+  <!-- Adobe Fonts (HWT American Shopworn + HWT Roman Extended Lightface + variants) -->
+  <link rel="stylesheet" href="https://use.typekit.net/wzu5gax.css">
+  <!-- Google Fonts (Oswald for labels, IM Fell English for body copy) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+
+    /* ============================================================
+       TOKENS
+    ============================================================ */
+    :root {
+      --cream:  #FFFFFF;
+      --blue:   #144ED3;   /* matched from horse-man SVG */
+      --red:    #C8292B;
+      --black:  #111111;
+      --white:  #FFFFFF;
+
+      --font-display: 'stud', 'Alfa Slab One', serif;
+      --font-nav:     'hwt-roman-extended-light-fac', 'Oswald', sans-serif;
+    }
+
+    /* ============================================================
+       RESET + BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--blue);
+      font-family: 'Oswald', sans-serif;
+    }
+
+    /* ============================================================
+       ALERT BAR
+    ============================================================ */
+    .alert-bar {
+      background: var(--blue);
+      color: var(--cream);
+      text-align: center;
+      padding: 10px 20px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    nav {
+      background: var(--cream);
+      border-bottom: 2px solid var(--blue);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 40px;
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--blue);
+      text-decoration: none;
+      font-family: var(--font-nav);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    nav a:hover  { color: var(--red); }
+    nav a.rsvp   { color: var(--red); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      padding: 40px 0 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      /* min-height so horses have room */
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Horse riders — absolutely flanking the text */
+    .hero-horses {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      pointer-events: none;
+    }
+
+    .hero-horse {
+      width: clamp(160px, 20vw, 260px);
+      mix-blend-mode: multiply; /* blends white bg away on cream */
+      opacity: 0.92;
+    }
+
+    .hero-horse.flip { transform: scaleX(-1); }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .star-r { color: var(--red); }
+    .star-b { color: var(--blue); }
+
+    /* Tight text stack — flex col, eyebrow gets bottom margin for breathing room */
+    .hero-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      line-height: 0.85;
+      margin-top: 18px; /* space between JOIN US FOR and the text block */
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(36px, 7vw, 72px);
+      line-height: 0.9;
+      text-transform: uppercase;
+      color: var(--blue);
+      display: block;
+    }
+
+    .hero-40 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(48px, 10vw, 96px);
+      line-height: 0.9;
+      color: var(--blue);
+      display: block;
+    }
+
+    .hero-40 sup {
+      font-family: var(--font-nav);
+      font-weight: 400;
+      font-style: normal;
+      font-size: 0.28em;
+      vertical-align: 0.72em;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-squiggle {
+      color: var(--blue);
+      opacity: 0.3;
+      font-size: 16px;
+      letter-spacing: -3px;
+      display: block;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .hero-rodeo {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(36px, 7vw, 72px);
+      text-transform: uppercase;
+      color: var(--blue);
+      display: block;
+      line-height: 0.9;
+    }
+
+    /* ============================================================
+       DIVIDER SQUIGGLE
+    ============================================================ */
+    .squiggle-divider {
+      text-align: center;
+      color: var(--blue);
+      opacity: 0.3;
+      font-size: 24px;
+      letter-spacing: -4px;
+      padding: 4px 0;
+    }
+
+    /* ============================================================
+       STAR DIVIDER
+    ============================================================ */
+    .star-divider {
+      text-align: center;
+      padding: 16px 0 8px;
+      font-size: 48px;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    /* ============================================================
+       COUNTDOWN
+    ============================================================ */
+    .countdown-section {
+      padding: 8px 24px 32px;
+      text-align: center;
+    }
+
+    .countdown {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .countdown-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .countdown-digit {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(28px, 5vw, 52px);
+      color: var(--white);
+      border: 3px solid transparent;
+      width:  clamp(72px, 11vw, 116px);
+      height: clamp(60px, 9vw, 100px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* red / blue / red / blue — days, hours, minutes, seconds */
+    .countdown > .countdown-unit:nth-child(1) .countdown-digit { background: var(--red); }
+    .countdown > .countdown-unit:nth-child(3) .countdown-digit { background: var(--blue); }
+    .countdown > .countdown-unit:nth-child(5) .countdown-digit { background: var(--red); }
+    .countdown > .countdown-unit:nth-child(7) .countdown-digit { background: var(--blue); }
+
+    /* match label colors to box colors */
+    .countdown > .countdown-unit:nth-child(1) .countdown-label,
+    .countdown > .countdown-unit:nth-child(5) .countdown-label { color: var(--red); opacity: 1; }
+    .countdown > .countdown-unit:nth-child(3) .countdown-label,
+    .countdown > .countdown-unit:nth-child(7) .countdown-label { color: var(--blue); opacity: 1; }
+
+    .countdown-sep {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(32px, 6vw, 60px);
+      color: var(--blue);
+      padding-top: 8px;
+      line-height: 1;
+      opacity: 0.35;
+    }
+
+    .countdown-label {
+      font-family: var(--font-nav);
+      font-weight: 400;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       EVENT DETAILS
+    ============================================================ */
+    .details-section {
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .details-section .detail-line {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: clamp(16px, 2.2vw, 22px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      line-height: 1.8;
+    }
+
+    .details-section .detail-sub {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--blue);
+      opacity: 0.65;
+      margin-top: 6px;
+    }
+
+    /* ============================================================
+       WHAT TO EXPECT
+    ============================================================ */
+    .expect-section {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 32px 32px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(20px, 2.8vw, 26px);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      margin-bottom: 18px;
+    }
+
+    .expect-section p {
+      font-family: 'IM Fell English', serif;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--blue);
+      text-align: justify;
+    }
+
+    /* ============================================================
+       ACTIVITIES
+    ============================================================ */
+    .activities-section {
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .activities-section .act-line {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(20px, 3.5vw, 38px);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+      color: var(--blue);
+    }
+
+    .pipe { color: var(--red); margin: 0 8px; font-weight: 400; }
+
+    /* ============================================================
+       SURPRISE BANNER
+    ============================================================ */
+    .surprise-section {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 32px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .surprise-img {
+      width: clamp(80px, 10vw, 130px);
+      mix-blend-mode: multiply;
+      opacity: 0.9;
+      flex-shrink: 0;
+    }
+
+    .surprise-img.flip { transform: scaleX(-1); }
+
+    .surprise-copy {
+      text-align: center;
+    }
+
+    .surprise-copy .remember {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .surprise-copy .dont-spoil {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(26px, 4vw, 40px);
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--blue);
+    }
+
+    /* ============================================================
+       RSVP
+    ============================================================ */
+    .rsvp-section {
+      padding: 40px 24px 56px;
+      text-align: center;
+    }
+
+    .rsvp-box {
+      display: inline-block;
+      border: 4px solid var(--blue);
+      padding: 24px 72px;
+    }
+
+    .stars-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      font-size: 18px;
+      line-height: 1;
+      margin: 10px 0;
+    }
+
+    .rsvp-word {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: clamp(60px, 12vw, 100px);
+      text-transform: uppercase;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      display: block;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--blue);
+      color: var(--cream);
+      text-align: center;
+      padding: 36px 24px 28px;
+    }
+
+    .footer-stars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .footer-title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+
+    .footer-details {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+      line-height: 2;
+    }
+
+    .footer-squiggle {
+      color: var(--cream);
+      opacity: 0.25;
+      font-size: 22px;
+      letter-spacing: -4px;
+      margin-top: 12px;
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       ALERT BAR
+  ============================================================ -->
+  <div class="alert-bar">
+    ★ &nbsp; Don't spill the beans! &nbsp; It's a surprise ya ding dongs. &nbsp; ★
+  </div>
+
+  <!-- ============================================================
+       NAV
+  ============================================================ -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#vibes">Vibes</a>
+    <a href="#food">Food</a>
+    <a href="#photos">Photos</a>
+    <a href="#rsvp" class="rsvp">RSVP</a>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="home">
+
+    <!-- Horse riders flanking — flipped so both face inward toward text -->
+    <div class="hero-horses">
+      <img src="horse-man-1.png" alt="" class="hero-horse flip">
+      <img src="horse-man-2.png" alt="" class="hero-horse">
+    </div>
+
+    <!-- Eyebrow -->
+    <p class="hero-eyebrow">
+      <span class="star-r">★</span>
+      <span class="star-b">★</span>
+      <span class="star-r">✦</span>
+      &nbsp;Join Us For&nbsp;
+      <span class="star-r">✦</span>
+      <span class="star-b">★</span>
+      <span class="star-r">★</span>
+    </p>
+
+    <!-- Tight stacked headline -->
+    <div class="hero-stack">
+      <span class="hero-name">Aaron's</span>
+      <span class="hero-40">40<sup>th</sup></span>
+      <span class="hero-squiggle">〰〰〰〰〰〰〰</span>
+      <span class="hero-rodeo">Rodeo</span>
+    </div>
+
+  </section>
+
+  <!-- star break -->
+  <div class="star-divider">✦</div>
+
+  <!-- ============================================================
+       COUNTDOWN
+  ============================================================ -->
+  <section class="countdown-section">
+    <div class="countdown" id="countdown">
+      <div class="countdown-unit">
+        <div class="countdown-digit" id="cd-days">--</div>
+        <div class="countdown-label">Days</div>
+      </div>
+      <div class="countdown-sep">·</div>
+      <div class="countdown-unit">
+        <div class="countdown-digit" id="cd-hours">--</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-sep">·</div>
+      <div class="countdown-unit">
+        <div class="countdown-digit" id="cd-mins">--</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-sep">·</div>
+      <div class="countdown-unit">
+        <div class="countdown-digit" id="cd-secs">--</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EVENT DETAILS
+  ============================================================ -->
+  <div class="squiggle-divider">〰〰〰〰〰〰〰〰〰〰</div>
+  <section class="details-section" id="about">
+    <p class="detail-line">Saturday &nbsp;|&nbsp; May 9th &nbsp;|&nbsp; 2PM</p>
+    <p class="detail-line">1002 S. Lancaster, Moulton TX 77975</p>
+    <p class="detail-sub">A Wild Good Time</p>
+  </section>
+
+  <!-- ============================================================
+       WHAT TO EXPECT
+  ============================================================ -->
+  <div class="squiggle-divider">〰〰〰〰〰〰〰〰〰〰</div>
+  <section class="expect-section">
+    <h2 class="section-title">What to Expect</h2>
+    <p>One of the sweetest guys we know is turning the big 40! So we're throwing a hootin' tootin' good time and we're hoping you will be there! We're slinging dogs, strawberry shortcake, champagne and ice cold beers. All are welcome.</p>
+  </section>
+
+  <!-- ============================================================
+       ACTIVITIES
+  ============================================================ -->
+  <div class="squiggle-divider">〰〰〰〰〰〰〰〰〰〰</div>
+  <section class="activities-section" id="vibes">
+    <p class="act-line">
+      Dancing <span class="pipe">|</span> BBQ <span class="pipe">|</span> Games <span class="pipe">|</span> Cold Beer
+    </p>
+    <p class="act-line">
+      Pool Time <span class="pipe">|</span> Karaoke <span class="pipe">|</span> Flower Bar
+    </p>
+  </section>
+
+  <!-- ============================================================
+       SURPRISE BANNER
+  ============================================================ -->
+  <div class="squiggle-divider">〰〰〰〰〰〰〰〰〰〰</div>
+  <section class="surprise-section">
+    <img src="horse-man-1.png" alt="" class="surprise-img">
+    <div class="surprise-copy">
+      <p class="remember">Remember Partner!</p>
+      <p class="dont-spoil">Don't Spoil<br>The Surprise</p>
+    </div>
+    <img src="horse-man-2.png" alt="" class="surprise-img flip">
+  </section>
+
+  <!-- ============================================================
+       RSVP
+  ============================================================ -->
+  <div class="squiggle-divider">〰〰〰〰〰〰〰〰〰〰</div>
+  <section class="rsvp-section" id="rsvp">
+    <div class="rsvp-box">
+      <div class="stars-row">
+        <span class="star-r">★</span><span class="star-b">★</span>
+        <span class="star-r">★</span><span class="star-b">★</span>
+        <span class="star-r">★</span><span class="star-b">★</span>
+        <span class="star-r">★</span><span class="star-b">★</span>
+        <span class="star-r">★</span>
+      </div>
+      <span class="rsvp-word">RSVP</span>
+      <div class="stars-row">
+        <span class="star-b">★</span><span class="star-r">★</span>
+        <span class="star-b">★</span><span class="star-r">★</span>
+        <span class="star-b">★</span><span class="star-r">★</span>
+        <span class="star-b">★</span><span class="star-r">★</span>
+        <span class="star-b">★</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="footer-stars">
+      <span class="star-r">★</span>
+      <span>★</span>
+      <span>★</span>
+      <span class="footer-title">Aaron's 40° Birthday Surprise</span>
+      <span>★</span>
+      <span>★</span>
+      <span class="star-r">★</span>
+    </div>
+    <div class="footer-details">
+      Saturday, May 9th &nbsp;|&nbsp; 2PM<br>
+      1002 S. Lancaster, Moulton TX 77975
+    </div>
+    <span class="footer-squiggle">〰〰〰〰〰〰〰</span>
+  </footer>
+
+  <!-- ============================================================
+       COUNTDOWN JS
+  ============================================================ -->
+  <script>
+    const EVENT = new Date('2026-05-09T14:00:00');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const diff = EVENT - Date.now();
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML =
+          '<p style="font-family:\'Alfa Slab One\',serif;font-size:2rem;letter-spacing:.1em">LET\'S RIDE!</p>';
+        return;
+      }
+      const d = Math.floor(diff / 864e5);
+      const h = Math.floor(diff % 864e5 / 36e5);
+      const m = Math.floor(diff % 36e5 / 6e4);
+      const s = Math.floor(diff % 6e4 / 1e3);
+      document.getElementById('cd-days').textContent  = pad(d);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent  = pad(m);
+      document.getElementById('cd-secs').textContent  = pad(s);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+
+</body>
+</html>
