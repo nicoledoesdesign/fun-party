@@ -91,6 +91,33 @@
 
     .nav-rsvp:hover { opacity: 0.9; }
 
+    /* hamburger — hidden on desktop */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 16px;
+      height: 72px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      transition: transform 0.2s, opacity 0.15s;
+    }
+
+    /* animated → X when open */
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ============================================================
        HERO
     ============================================================ */
@@ -812,10 +839,10 @@
       margin-bottom: 32px;
     }
 
-    .modal-response.yes     { color: var(--blue); }
-    .modal-response.maybe   { color: var(--blue); }
-    .modal-response.nah     { color: var(--red);  }
-    .modal-response.success { color: var(--red);  }
+    .modal-response.yes     { color: var(--red); }
+    .modal-response.maybe   { color: var(--red); }
+    .modal-response.nah     { color: var(--red); }
+    .modal-response.success { color: var(--red); }
 
     .modal-form {
       display: flex;
@@ -854,7 +881,7 @@
       margin-top: 12px;
       width: 100%;
       height: 72px;
-      background: var(--blue);
+      background: var(--red);
       color: var(--cream);
       font-family: var(--font-display);
       font-size: clamp(24px, 2.4vw, 36px);
@@ -864,10 +891,6 @@
     }
 
     .modal-submit:hover { opacity: 0.85; }
-
-    .modal-submit.nah-submit {
-      background: var(--red);
-    }
 
     .modal-field {
       display: flex;
@@ -956,6 +979,7 @@
     .footer-top {
       padding: 32px 40px 28px;
       text-align: center;
+      background: var(--red);
     }
 
     .footer-nav {
@@ -985,7 +1009,7 @@
 
     @media (max-width: 680px) {
       .disclaimer-label,
-      .disclaimer-part { display: block; line-height: 2; }
+      .disclaimer-part { display: block; line-height: 1.5; }
     }
 
     /* footer event name stars — Figma: fill #F02300, white drop shadow */
@@ -1067,8 +1091,29 @@
        RESPONSIVE
     ============================================================ */
     @media (max-width: 680px) {
-      .nav-links a { font-size: 10px; letter-spacing: 0.04em; }
-      .nav-links  { gap: 10px; padding: 0 12px; }
+      .nav-hamburger { display: flex; }
+
+      /* hide inline links; they become the dropdown panel */
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--blue);
+        border-top: 2px solid rgba(255,255,255,0.15);
+        z-index: 99;
+      }
+
+      .nav-links.open { display: flex; }
+
+      .nav-links a {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        padding: 16px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
 
       .info-grid { grid-template-columns: 1fr; }
 
@@ -1077,6 +1122,11 @@
 
       .band { height: 60px; }
       .band-text { font-size: clamp(18px, 4.5vw, 32px); }
+
+      .footer-top { padding: 14px 24px; }
+
+      .footer-date { font-size: 20px; }
+      .footer-addr { font-size: 20px; }
     }
 
   </style>
@@ -1087,6 +1137,9 @@
        NAV
   ============================================================ -->
   <nav class="site-nav" id="home">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-links">
       <a href="#home">home</a>
       <a href="#about">about</a>
@@ -1351,7 +1404,7 @@
       const config = {
         yes:   { label: "I'll be there!",  submitText: "Count me in!",    btnClass: '',           modalClass: '',          contactLabel: 'Email or phone',  contactPlaceholder: 'how to reach you' },
         maybe: { label: "Maybe…",           submitText: "I'll let you know", btnClass: '',         modalClass: 'maybe-mode', contactLabel: 'Email or phone',  contactPlaceholder: 'how to reach you' },
-        nah:   { label: "Shoot, nah.",      submitText: "Send it",         btnClass: 'nah-submit', modalClass: 'nah-mode',   contactLabel: 'Email',           contactPlaceholder: "we'll send you the party highlights" },
+        nah:   { label: "Shoot, nah.",      submitText: "Send it",         btnClass: '',           modalClass: 'nah-mode',   contactLabel: 'Email',           contactPlaceholder: "we'll send you the party highlights" },
       };
 
       function openModal(response) {
@@ -1454,6 +1507,32 @@
       closeBtn.addEventListener('click', close);
       modal.addEventListener('click', e => { if (e.target === modal) close(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    })();
+
+    // ---- Hamburger menu ----
+    (function () {
+      const btn   = document.getElementById('nav-hamburger');
+      const links = document.querySelector('.nav-links');
+      if (!btn) return;
+
+      function closeMenu() {
+        links.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', () => {
+        const opening = !links.classList.contains('open');
+        links.classList.toggle('open', opening);
+        btn.classList.toggle('open', opening);
+        btn.setAttribute('aria-expanded', String(opening));
+      });
+
+      // close when a link is tapped
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+      // close on Escape
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     })();
   </script>
 
