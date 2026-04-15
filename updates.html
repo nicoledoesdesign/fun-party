@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Updates — Aaron's 40th Rodeo</title>
+
+  <!-- Adobe Fonts: veneer, verveine, quimby-gubernatorial, neuzon -->
+  <link rel="stylesheet" href="https://use.typekit.net/yiw4fvk.css">
+
+  <!-- Google Fonts fallbacks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Dancing+Script:wght@700&family=Libre+Baskerville:ital,wght@0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue:  #0058f1;
+      --red:   #ef2200;
+      --white: #ffffff;
+      --cream: #fffcf7;
+
+      --font-display: 'veneer-two',            'Alfa Slab One',       serif;
+      --font-script:  'verveine',              'Dancing Script',      cursive;
+      --font-heading: 'quimby-gubernatorial',  'Libre Baskerville',   serif;
+      --font-body:    'neuzon',                'DM Sans',             sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; overflow-x: clip; }
+    body  { background: var(--white); color: var(--blue); font-family: var(--font-body); }
+    img   { display: block; }
+    a     { text-decoration: none; color: inherit; }
+    button { font: inherit; border: none; cursor: pointer; background: none; }
+
+    /* NAV */
+    .site-nav {
+      background: var(--blue);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2.6vw, 40px);
+      padding: 0 clamp(20px, 3.2vw, 48px);
+    }
+    .nav-links a {
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: clamp(12px, 1.6vw, 24px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: opacity 0.15s;
+    }
+    .nav-links a:hover { opacity: 0.65; }
+    .nav-links a.nav-active { opacity: 1; border-bottom: 2px solid var(--white); padding-bottom: 2px; }
+    .nav-rsvp {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.6vw, 24px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: clamp(90px, 19vw, 289px);
+      height: 72px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 5px solid var(--white);
+      transition: opacity 0.15s;
+    }
+    .nav-rsvp:hover { opacity: 0.9; }
+
+    /* BAND */
+    .band {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 2.1vw, 32px);
+      padding: 0 clamp(16px, 2.6vw, 40px);
+    }
+    .band-red  { background: var(--red); }
+    .band-text {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(18px, 2.4vw, 37px);
+      color: var(--white);
+      text-align: center;
+    }
+    .band-star {
+      font-size: clamp(22px, 2.4vw, 36px);
+      color: var(--white);
+      opacity: 0.85;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    /* UPDATES PAGE */
+    .updates-page {
+      padding: 72px 24px 96px;
+      text-align: center;
+      min-height: 60vh;
+    }
+
+    .updates-head {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4.6vw, 70px);
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+
+    .info-head-stars {
+      color: var(--red);
+      letter-spacing: 0.05em;
+      font-size: 0.75em;
+      vertical-align: middle;
+    }
+
+    .updates-caught-up {
+      font-family: var(--font-script);
+      font-size: clamp(18px, 2.2vw, 32px);
+      color: var(--blue);
+      opacity: 0.55;
+      margin-bottom: 48px;
+    }
+
+    .updates-feed {
+      max-width: 580px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .update-entry {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 22px 26px;
+      border: 2px solid var(--blue);
+    }
+
+    .update-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .update-body { flex: 1; }
+
+    .update-date {
+      display: block;
+      font-family: var(--font-body);
+      font-size: clamp(10px, 0.9vw, 12px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      opacity: 0.45;
+      margin-bottom: 6px;
+    }
+
+    .update-text {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.3vw, 18px);
+      color: var(--blue);
+      line-height: 1.6;
+    }
+
+    .update-tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.75em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-left: 6px;
+    }
+
+    /* CONTACT MODAL */
+    .rsvp-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 88, 241, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .rsvp-modal.open { opacity: 1; pointer-events: auto; }
+    .rsvp-modal-inner {
+      background: var(--cream);
+      padding: clamp(32px, 5vw, 64px);
+      max-width: 520px;
+      width: calc(100% - 48px);
+      position: relative;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: var(--font-body);
+      font-size: 20px;
+      color: var(--blue);
+      opacity: 0.5;
+      line-height: 1;
+      transition: opacity 0.15s;
+    }
+    .modal-close:hover { opacity: 1; }
+    .modal-label {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(18px, 2vw, 28px);
+      color: var(--blue);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .modal-response {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 80px);
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 32px;
+    }
+    .modal-response.yes { color: var(--blue); }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.4vw, 20px);
+      color: var(--blue);
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      transition: border-color 0.15s;
+    }
+    .contact-link:hover { border-color: var(--blue); }
+
+    /* FOOTER */
+    footer { background: var(--blue); }
+    .footer-top { padding: 32px 40px 28px; text-align: center; }
+    .footer-nav {
+      font-family: var(--font-body);
+      font-size: clamp(13px, 1.2vw, 18px);
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+    .footer-nav a { color: var(--white); transition: opacity 0.15s; text-transform: uppercase; }
+    .footer-nav a:hover { opacity: 0.65; }
+    .footer-nav .sep { opacity: 0.45; margin: 0 8px; }
+    .footer-rule { border: none; border-top: 3px solid var(--white); margin: 20px 0 0; }
+    .footer-disclaimer {
+      background: var(--white);
+      padding: 10px 40px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: clamp(11px, 1vw, 15px);
+      color: var(--blue);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .disclaimer-label { color: var(--red); font-weight: 600; }
+    .disclaimer-red   { color: var(--red); }
+    @media (max-width: 680px) {
+      .disclaimer-label, .disclaimer-part { display: block; line-height: 2; }
+    }
+    .footer-stars { color: #F02300; font-size: 0.65em; vertical-align: middle; letter-spacing: 0.05em; }
+    .footer-stars-left  { filter: drop-shadow(-1.55px 0.77px 0 white); }
+    .footer-stars-right { filter: drop-shadow( 1.55px 0.77px 0 white); }
+    .footer-double-rule { width: 60%; margin: 28px auto 0; height: 20px; background-image: url('triple line footer.svg'); background-size: 100% auto; background-repeat: no-repeat; background-position: center; }
+    .footer-info { padding: 32px 40px 16px; text-align: center; }
+    .footer-event-name {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(22px, 2.7vw, 41px);
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .footer-date {
+      font-family: var(--font-display);
+      font-size: clamp(14px, 2.1vw, 32px);
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .footer-at, .footer-in {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 0.6em;
+      vertical-align: middle;
+      text-transform: none;
+    }
+    .footer-addr {
+      font-family: var(--font-display);
+      font-size: clamp(12px, 1.8vw, 28px);
+      color: var(--white);
+      text-transform: uppercase;
+      display: block;
+      transition: opacity 0.15s;
+    }
+    .footer-addr:hover { opacity: 0.75; }
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: var(--white);
+      opacity: 0.45;
+      text-align: center;
+      padding: 16px 40px 32px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-links">
+      <a href="index.html">home</a>
+      <a href="index.html#about">about</a>
+      <a href="index.html#info">info</a>
+      <a href="updates.html" class="nav-active">updates</a>
+      <a href="#" class="open-contact-modal">contact</a>
+    </div>
+    <a href="index.html#rsvp" class="nav-rsvp">rsvp</a>
+  </nav>
+
+  <!-- UPDATES -->
+  <section class="updates-page">
+    <div class="updates-head"><span class="info-head-stars">★★★</span>&nbsp; updates &nbsp;<span class="info-head-stars">★★★</span></div>
+    <p class="updates-caught-up">Nothing new yet. You showed up anyway — very Aaron of you.</p>
+
+    <div class="updates-feed">
+      <div class="update-entry">
+        <div class="update-dot"></div>
+        <div class="update-body">
+          <span class="update-date">April 15, 2026</span>
+          <p class="update-text">The site is live. You're looking at it. Aaron still doesn't know. <span class="update-tag">Tell no one.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT MODAL -->
+  <div class="rsvp-modal" id="contact-modal" role="dialog" aria-modal="true">
+    <div class="rsvp-modal-inner">
+      <button class="modal-close" id="contact-modal-close" aria-label="Close">✕</button>
+      <span class="modal-label">Get in touch</span>
+      <div class="modal-response yes" style="margin-bottom:24px">Contact</div>
+      <p style="font-family:var(--font-heading);font-style:italic;font-size:clamp(15px,1.5vw,21px);color:var(--blue);opacity:0.65;margin-bottom:36px">Questions? Want to help? Just nosy?</p>
+      <div style="display:flex;flex-direction:column;gap:20px;align-items:center">
+        <a href="mailto:majeskedesigns@gmail.com" class="contact-link">
+          <span style="opacity:0.6;font-size:1.1em">✉</span> majeskedesigns@gmail.com
+        </a>
+        <a href="tel:7343635432" class="contact-link">
+          <span style="opacity:0.6;font-size:1.1em">☏</span> Nicole &mdash; (734) 363-5432
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-nav">
+        <a href="index.html">home</a><span class="sep">|</span>
+        <a href="index.html#about">about</a><span class="sep">|</span>
+        <a href="index.html#info">info</a><span class="sep">|</span>
+        <a href="updates.html">updates</a><span class="sep">|</span>
+        <a href="#" class="open-contact-modal">contact</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <span class="disclaimer-label">Disclaimer:</span><span class="disclaimer-part"> Technically a backyard party.</span><span class="disclaimer-red disclaimer-part"> Emotionally, a rodeo.</span><span class="disclaimer-part"> Legally, we can't say.</span>
+    </div>
+    <div class="footer-info">
+      <div class="footer-event-name"><span class="footer-stars footer-stars-left">★★★</span> Aaron's 40th <span class="footer-stars footer-stars-right">★★★</span></div>
+      <div class="footer-date">
+        saturday, may 9th &nbsp; <span class="footer-at">at</span> &nbsp; 3pm
+      </div>
+      <a href="https://maps.google.com/?q=1002+S.+Lancaster,+Moulton,+TX+77975" target="_blank" rel="noopener" class="footer-addr">
+        1002 s. Lancaster &nbsp; <span class="footer-in">in</span> &nbsp; moulton, tX 77975
+      </a>
+      <div class="footer-double-rule"></div>
+    </div>
+    <p class="footer-copy">© 2026 aarons.party · All rights reserved. Unauthorized duplication of this party is strictly prohibited.</p>
+  </footer>
+
+  <script>
+    (function () {
+      const modal    = document.getElementById('contact-modal');
+      const closeBtn = document.getElementById('contact-modal-close');
+      if (!modal) return;
+
+      function open()  { modal.classList.add('open');    document.body.style.overflow = 'hidden'; }
+      function close() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+      document.querySelectorAll('.open-contact-modal').forEach(el => {
+        el.addEventListener('click', e => { e.preventDefault(); open(); });
+      });
+      closeBtn.addEventListener('click', close);
+      modal.addEventListener('click', e => { if (e.target === modal) close(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+
+</body>
+</html>
