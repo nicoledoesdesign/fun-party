@@ -45,7 +45,7 @@
     ============================================================ */
     .site-nav {
       background: var(--blue);
-      height: 72px;
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -80,7 +80,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       width: clamp(90px, 19vw, 289px);
-      height: 72px;
+      height: 58px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -299,7 +299,7 @@
 
     .addr-street {
       font-family: var(--font-display);
-      font-size: clamp(14px, 2.4vw, 36px);
+      font-size: clamp(20.5px, 3.5vw, 48px);
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
@@ -364,11 +364,34 @@
       width: clamp(100px, 12.5vw, 190px);
       margin: 0 -30px;
       flex-shrink: 0;
+      opacity: 0;
+      translate: 0 20px;
+      transition: opacity 0.45s ease, translate 0.45s ease;
     }
 
-    /* Rotations are baked into the Figma renders — no extra CSS rotation */
-    .photo-collage img:nth-child(2) { margin-bottom: 18px; }
-    .photo-collage img:nth-child(4) { margin-bottom: 10px; }
+    .photo-collage img.visible {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    .photo-collage img:nth-child(5n+1) { rotate: -5deg; transition-delay: 0.05s; }
+    .photo-collage img:nth-child(5n+2) { rotate:  3deg; margin-bottom: 18px; transition-delay: 0.13s; }
+    .photo-collage img:nth-child(5n+3) { rotate: -2deg; transition-delay: 0.21s; }
+    .photo-collage img:nth-child(5n+4) { rotate:  6deg; margin-bottom: 10px; transition-delay: 0.29s; }
+    .photo-collage img:nth-child(5n+5) { rotate: -4deg; transition-delay: 0.37s; }
+
+    @media (hover: hover) {
+      .photo-collage img:hover {
+        scale: 1.08;
+        rotate: 0deg;
+        z-index: 10;
+        transition-delay: 0s;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .photo-collage img { transition: none; opacity: 1; translate: 0 0; }
+    }
 
     .bio-inner {
       max-width: 520px;
@@ -395,7 +418,7 @@
 
     .bio-text {
       font-family: var(--font-script);
-      font-size: clamp(16px, 2.2vw, 34px);  /* Figma: Verveine 34px */
+      font-size: clamp(22px, 2.2vw, 34px);  /* Figma: Verveine 34px */
       color: var(--blue);
       line-height: 1.65;
       text-wrap: pretty;
@@ -437,7 +460,7 @@
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      margin-bottom: 28px;
+      margin-bottom: 10px;
     }
 
     .info-head-stars {
@@ -1117,11 +1140,16 @@
 
       .info-grid { grid-template-columns: 1fr; }
 
-      .photo-collage { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
-      .photo-collage img { flex-shrink: 0; width: clamp(90px, 26vw, 150px); }
+      .photo-collage { flex-wrap: nowrap; overflow-x: scroll; padding-bottom: 8px; scrollbar-width: none; -ms-overflow-style: none; }
+      .photo-collage::-webkit-scrollbar { display: none; }
+      .photo-collage img { flex-shrink: 0; width: clamp(170px, 32vw, 170px); margin: 0 -25px; transition: none !important; opacity: 1 !important; translate: none !important; }
 
       .band { height: 60px; }
-      .band-text { font-size: clamp(18px, 4.5vw, 32px); }
+      .band-text { font-size: clamp(22px, 4.5vw, 32px); }
+
+      /* re-align hero corner stars with date row + rodeo on mobile */
+      .star-pos.tl, .star-pos.tr { top: 33px; }
+      .star-pos.bl, .star-pos.br { bottom: 39px; }
 
       .footer-top { padding: 14px 24px; }
 
@@ -1219,11 +1247,11 @@
     <img src="horse-guy.svg" alt="" class="bio-cowboy bio-cowboy-left">
     <img src="horse-guy.svg" alt="" class="bio-cowboy bio-cowboy-right">
     <div class="photo-collage">
-      <img src="photo-2.png" alt="">
-      <img src="photo-1.png" alt="">
-      <img src="photo-4.png" alt="">
-      <img src="photo-3.png" alt="">
-      <img src="photo-5.png" alt="">
+      <img src="aaron-01.png" alt="">
+      <img src="aaron-02.png" alt="">
+      <img src="aaron-03.png" alt="">
+      <img src="aaron-04.png" alt="">
+      <img src="aaron-05.png" alt="">
     </div>
     <div class="bio-inner">
       <div class="bio-heading"><span class="bio-heading-stars">★★★</span>&nbsp; aaron's good people &nbsp;<span class="bio-heading-stars">★★★</span></div>
@@ -1533,6 +1561,65 @@
 
       // close on Escape
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    })();
+
+    // Photo collage scroll-in animation
+    (function () {
+      const imgs = document.querySelectorAll('.photo-collage img');
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      imgs.forEach(function (img) { observer.observe(img); });
+    })();
+
+    // Infinite photo scroll on mobile
+    (function () {
+      if (window.innerWidth > 680) return;
+      var collage = document.querySelector('.photo-collage');
+      if (!collage) return;
+      var origImgs = Array.from(collage.querySelectorAll('img'));
+      if (!origImgs.length) return;
+
+      collage.style.opacity = '0';
+
+      // prepend a full clone set (order preserved)
+      var before = document.createDocumentFragment();
+      origImgs.forEach(function (img) {
+        var c = img.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        before.appendChild(c);
+      });
+      collage.insertBefore(before, collage.firstChild);
+
+      // append a full clone set
+      origImgs.forEach(function (img) {
+        var c = img.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        collage.appendChild(c);
+      });
+
+      // after layout, jump to middle set and reveal
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var setW = Math.round(collage.scrollWidth / 3);
+          collage.scrollLeft = setW;
+          collage.style.opacity = '';
+
+          collage.addEventListener('scroll', function () {
+            var sw = Math.round(collage.scrollWidth / 3);
+            if (collage.scrollLeft < sw) {
+              collage.scrollLeft += sw;
+            } else if (collage.scrollLeft >= sw * 2) {
+              collage.scrollLeft -= sw;
+            }
+          }, { passive: true });
+        });
+      });
     })();
 
     // All anchor nav links — scroll without adding hash to URL
