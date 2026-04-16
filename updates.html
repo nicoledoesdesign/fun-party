@@ -36,7 +36,7 @@
     /* NAV */
     .site-nav {
       background: var(--blue);
-      height: 72px;
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -68,7 +68,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       width: clamp(90px, 19vw, 289px);
-      height: 72px;
+      height: 58px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -77,6 +77,30 @@
       transition: opacity 0.15s;
     }
     .nav-rsvp:hover { opacity: 0.9; }
+
+    /* hamburger — hidden on desktop */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      padding: 0 16px;
+      height: 72px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      transition: transform 0.2s, opacity 0.15s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* BAND */
     .band {
@@ -128,7 +152,8 @@
 
     .updates-caught-up {
       font-family: var(--font-script);
-      font-size: clamp(18px, 2.2vw, 32px);
+      font-size: clamp(24px, 2.2vw, 32px);
+      line-height: 1;
       color: var(--blue);
       opacity: 0.55;
       margin-bottom: 48px;
@@ -165,7 +190,7 @@
     .update-date {
       display: block;
       font-family: var(--font-body);
-      font-size: clamp(10px, 0.9vw, 12px);
+      font-size: clamp(14px, 0.9vw, 12px);
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--blue);
@@ -175,7 +200,7 @@
 
     .update-text {
       font-family: var(--font-body);
-      font-size: clamp(14px, 1.3vw, 18px);
+      font-size: clamp(18px, 1.3vw, 18px);
       color: var(--blue);
       line-height: 1.6;
     }
@@ -183,7 +208,7 @@
     .update-tag {
       display: inline-block;
       font-family: var(--font-display);
-      font-size: 0.75em;
+      font-size: 1em;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--red);
@@ -256,7 +281,7 @@
 
     /* FOOTER */
     footer { background: var(--blue); }
-    .footer-top { padding: 32px 40px 28px; text-align: center; }
+    .footer-top { padding: 32px 40px 28px; text-align: center; background: var(--red); }
     .footer-nav {
       font-family: var(--font-body);
       font-size: clamp(13px, 1.2vw, 18px);
@@ -280,7 +305,35 @@
     .disclaimer-label { color: var(--red); font-weight: 600; }
     .disclaimer-red   { color: var(--red); }
     @media (max-width: 680px) {
-      .disclaimer-label, .disclaimer-part { display: block; line-height: 2; }
+      .nav-hamburger { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--blue);
+        border-top: 2px solid rgba(255,255,255,0.15);
+        z-index: 99;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        padding: 16px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .band { height: 60px; }
+      .band-text { font-size: clamp(22px, 4.5vw, 32px); }
+
+      .footer-top { padding: 14px 24px; }
+      .footer-date { font-size: 20px; }
+      .footer-addr { font-size: 20px; }
+
+      .disclaimer-label, .disclaimer-part { display: block; line-height: 1.5; }
     }
     .footer-stars { color: #F02300; font-size: 0.65em; vertical-align: middle; letter-spacing: 0.05em; }
     .footer-stars-left  { filter: drop-shadow(-1.55px 0.77px 0 white); }
@@ -299,7 +352,7 @@
       font-size: clamp(14px, 2.1vw, 32px);
       color: var(--white);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .footer-at, .footer-in {
       font-family: var(--font-heading);
@@ -310,7 +363,7 @@
     }
     .footer-addr {
       font-family: var(--font-display);
-      font-size: clamp(12px, 1.8vw, 28px);
+      font-size: clamp(14px, 2.1vw, 32px);
       color: var(--white);
       text-transform: uppercase;
       display: block;
@@ -333,6 +386,9 @@
 
   <!-- NAV -->
   <nav class="site-nav">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-links">
       <a href="index.html">home</a>
       <a href="index.html#about">about</a>
@@ -346,7 +402,7 @@
   <!-- UPDATES -->
   <section class="updates-page">
     <div class="updates-head"><span class="info-head-stars">★★★</span>&nbsp; updates &nbsp;<span class="info-head-stars">★★★</span></div>
-    <p class="updates-caught-up">Nothing new yet. You showed up anyway — very Aaron of you.</p>
+    <p class="updates-caught-up">Nothing new yet. You showed up anyway — very Aaron of you. 🤠</p>
 
     <div class="updates-feed">
       <div class="update-entry">
@@ -405,6 +461,30 @@
   </footer>
 
   <script>
+    // Hamburger menu
+    (function () {
+      const btn   = document.getElementById('nav-hamburger');
+      const links = document.querySelector('.nav-links');
+      if (!btn) return;
+
+      function closeMenu() {
+        links.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', () => {
+        const opening = !links.classList.contains('open');
+        links.classList.toggle('open', opening);
+        btn.classList.toggle('open', opening);
+        btn.setAttribute('aria-expanded', String(opening));
+      });
+
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    })();
+
+    // Contact modal
     (function () {
       const modal    = document.getElementById('contact-modal');
       const closeBtn = document.getElementById('contact-modal-close');

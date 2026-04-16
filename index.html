@@ -281,13 +281,18 @@
     .address-section {
       text-align: center;
       padding: 12px 24px 48px;
+      position: relative;
     }
 
     .address-star-row {
       display: flex;
       justify-content: space-between;
       padding: 0 clamp(14px, 3.4vw, 51px);
-      margin-bottom: 2px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: clamp(32px, calc(2.4vw + 23px), 60px);
+      pointer-events: none;
     }
 
     .address-star-row span {
