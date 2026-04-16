@@ -280,8 +280,9 @@
     ============================================================ */
     .address-section {
       text-align: center;
-      padding: 12px 24px 48px;
+      padding: 24px 24px 48px;
       position: relative;
+      z-index: 3;
     }
 
     .address-star-row {
@@ -352,7 +353,7 @@
        PHOTO COLLAGE + BIO
     ============================================================ */
     .bio-section {
-      padding: 64px 24px 80px;
+      padding: 64px 0px 80px;
       position: relative;
       overflow: hidden;
     }
@@ -366,8 +367,8 @@
     }
 
     .photo-collage img {
-      width: clamp(100px, 12.5vw, 190px);
-      margin: 0 -30px;
+      width: clamp(130px, 16.25vw, 247px);
+      margin: 0 -24px;
       flex-shrink: 0;
       opacity: 0;
       translate: 0 20px;
@@ -406,27 +407,31 @@
 
     .bio-heading {
       font-family: var(--font-display);
-      font-size: clamp(20px, 3.1vw, 46px);
+      font-size: clamp(30px, 3.1vw, 46px);
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
       margin-bottom: 8px;
-      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
     }
 
     .bio-heading-stars {
       color: var(--red);
       letter-spacing: 0.05em;
-      font-size: 0.75em;
-      vertical-align: middle;
+      font-size: 0.65em;
+      flex-shrink: 0;
     }
 
     .bio-text {
       font-family: var(--font-script);
-      font-size: clamp(22px, 2.2vw, 34px);  /* Figma: Verveine 34px */
+      font-size: clamp(26px, 2.2vw, 34px);  /* Figma: Verveine 34px */
       color: var(--blue);
-      line-height: 1.65;
+      line-height: 1.4;
       text-wrap: pretty;
+      padding: 0px 24px 0px;
     }
 
     /* override browser default yellow <mark> */
@@ -461,18 +466,22 @@
 
     .info-section-head {
       font-family: var(--font-display);
-      font-size: clamp(22px, 3.1vw, 46px);
+      font-size: clamp(28px, 3.1vw, 46px);
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
     }
 
     .info-head-stars {
       color: var(--red);
       letter-spacing: 0.05em;
-      font-size: 0.75em;
-      vertical-align: middle;
+      font-size: 0.65em;
+      flex-shrink: 0;
     }
 
     /* single-column centered stack, matching original design */
@@ -509,63 +518,57 @@
 
     .note-label { color: var(--blue); }
 
-    /* ---- live post-it cards (saved for later — images used for now) ----
     .postit-card {
       position: relative;
       background-image: url('post it 1.png');
-      background-size: cover;
-      background-position: center top;
+      background-size: 100% 100%;
       background-repeat: no-repeat;
-      padding: 16% 13% 11%;
+      padding: 17% 13% 12%;
       width: 100%;
-      max-width: 460px;
-      aspect-ratio: 1282 / 1300;
+      max-width: 575px;
     }
 
     .postit-title {
       font-family: var(--font-script);
-      font-size: clamp(22px, 3vw, 46px);
-      color: var(--red);
+      font-size: clamp(28px, 4vw, 55px);
       line-height: 1.1;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.6em;
     }
+
+    .postit-card.red .postit-title { color: var(--red); }
+    .postit-card.blue .postit-title { color: var(--blue); }
 
     .postit-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.3em;
+      gap: 0.55em;
     }
 
     .postit-list li {
       font-family: var(--font-body);
-      font-size: clamp(10px, 0.95vw, 14px);
-      color: var(--blue);
+      font-size: clamp(13px, 1.25vw, 18px);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       line-height: 1.5;
       display: flex;
       align-items: baseline;
-      gap: 0.45em;
+      gap: 0.5em;
     }
 
     .postit-list li::before {
       content: '•';
-      color: var(--blue);
       flex-shrink: 0;
     }
 
-    .postit-list.with-checks li::after {
-      content: ' ✓';
-      color: var(--red);
-      flex-shrink: 0;
-    }
-    ---- end live post-it cards ---- */
+    .postit-card.red .postit-list li,
+    .postit-card.red .postit-list li::before { color: var(--red); }
 
-    .info-postit {
-      width: 100%;
-      max-width: 460px;
-    }
+    .postit-card.blue .postit-list li,
+    .postit-card.blue .postit-list li::before { color: var(--blue); }
+
+    .postit-check { margin-left: 0.15em; }
+
 
     /* ============================================================
        UPDATES
@@ -721,11 +724,15 @@
 
     .rsvp-head {
       font-family: var(--font-display);
-      font-size: clamp(25px, 4.1vw, 63px);
+      font-size: clamp(28px, 4.1vw, 63px);
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
       margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
     }
 
     .rsvp-buttons {
@@ -1259,7 +1266,7 @@
       <img src="aaron-05.png" alt="">
     </div>
     <div class="bio-inner">
-      <div class="bio-heading"><span class="bio-heading-stars">★★★</span>&nbsp; aaron's good people &nbsp;<span class="bio-heading-stars">★★★</span></div>
+      <div class="bio-heading"><span class="bio-heading-stars">★★★</span><span>aaron's good people</span><span class="bio-heading-stars">★★★</span></div>
       <p class="bio-text">The kind of guy who shows up — for the move, for tire change, for the thing you didn't even have to ask him twice about. He's been doing it for forty years and he's never once made it a big deal. <mark class="bio-highlight">May 9th, we're making it a big deal. Come ready to celebrate one of the good ones.</mark></p>
     </div>
   </section>
@@ -1277,13 +1284,33 @@
        IMPORTANT INFO
   ============================================================ -->
   <section class="info-section" id="info">
-    <div class="info-section-head"><span class="info-head-stars">★★★</span>&nbsp; important info &nbsp;<span class="info-head-stars">★★★</span></div>
+    <div class="info-section-head"><span class="info-head-stars">★★★</span><span>important info</span><span class="info-head-stars">★★★</span></div>
     <div class="info-grid">
       <div class="info-col">
-        <img src="figma-frame13.png" alt="What's Happening checklist" class="info-postit">
+        <div class="postit-card red">
+          <div class="postit-title">What's Happening</div>
+          <ul class="postit-list">
+            <li>BBQ, Cake, &amp; Cold Drinks <span class="postit-check">✓</span></li>
+            <li>Pool &amp; Hot Tub <span class="postit-check">✓</span></li>
+            <li>Fun &amp; Games <span class="postit-check">✓</span></li>
+            <li>Music, Karaoke, &amp; Dancing <span class="postit-check">✓</span></li>
+            <li>Flower Bar <span class="postit-check">✓</span> (For the Mamas)</li>
+            <li>Photo Moments <span class="postit-check">✓</span></li>
+            <li>Surprise Intact <span class="postit-check">✓</span></li>
+          </ul>
+        </div>
       </div>
       <div class="info-col">
-        <img src="figma-frame12.png" alt="How to Prepare notes" class="info-postit">
+        <div class="postit-card blue">
+          <div class="postit-title">How to Prepare</div>
+          <ul class="postit-list">
+            <li>Come as you are. Almost.</li>
+            <li>Dress for the sun. Wear what's comfortable.</li>
+            <li>Bring your suit, a towel, and your whole self.</li>
+            <li>BYO cooler and camp chair if you want — this is Moulton, that's just how it's done.</li>
+            <li>SPF and bug spray on site. Kids welcome. 3pm sharp.</li>
+          </ul>
+        </div>
       </div>
       <div class="info-notes">
         <p class="info-note"><span class="note-label">Upon arrival:</span> park in the driveway or side yard</p>
@@ -1311,7 +1338,7 @@
   <section class="rsvp-section" id="rsvp">
     <img src="horse-guy.svg" alt="" class="rsvp-cowboy rsvp-cowboy-left">
     <img src="horse-guy.svg" alt="" class="rsvp-cowboy rsvp-cowboy-right">
-    <div class="rsvp-head"><span class="bio-heading-stars">★★★</span>&nbsp; RSVP &nbsp;<span class="bio-heading-stars">★★★</span></div>
+    <div class="rsvp-head"><span class="bio-heading-stars">★★★</span><span>RSVP</span><span class="bio-heading-stars">★★★</span></div>
     <div class="rsvp-buttons">
       <button class="rsvp-btn yes"   data-response="yes"  ><span class="btn-star">★</span> I'll be there! <span class="btn-star">★</span></button>
       <button class="rsvp-btn maybe" data-response="maybe"><span class="btn-star">★</span> maybe? <span class="btn-star">★</span></button>

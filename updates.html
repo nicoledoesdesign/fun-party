@@ -141,13 +141,17 @@
       text-transform: uppercase;
       letter-spacing: 0.02em;
       margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
     }
 
     .info-head-stars {
       color: var(--red);
       letter-spacing: 0.05em;
-      font-size: 0.75em;
-      vertical-align: middle;
+      font-size: 0.65em;
+      flex-shrink: 0;
     }
 
     .updates-caught-up {
@@ -401,7 +405,7 @@
 
   <!-- UPDATES -->
   <section class="updates-page">
-    <div class="updates-head"><span class="info-head-stars">★★★</span>&nbsp; updates &nbsp;<span class="info-head-stars">★★★</span></div>
+    <div class="updates-head"><span class="info-head-stars">★★★</span><span>updates</span><span class="info-head-stars">★★★</span></div>
     <p class="updates-caught-up">Nothing new yet. You showed up anyway — very Aaron of you. 🤠</p>
 
     <div class="updates-feed">
