@@ -1147,7 +1147,7 @@
       <a href="updates.html">updates</a>
       <a href="#" class="open-contact-modal">contact</a>
     </div>
-    <a href="#rsvp" class="nav-rsvp">rsvp</a>
+    <a href="#rsvp" class="nav-rsvp" id="nav-rsvp-btn">rsvp</a>
   </nav>
 
   <!-- ============================================================
@@ -1534,6 +1534,12 @@
       // close on Escape
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     })();
+
+    // RSVP nav button — scroll without adding hash to URL
+    document.getElementById('nav-rsvp-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('rsvp').scrollIntoView({ behavior: 'smooth' });
+    });
   </script>
 
 </body>
