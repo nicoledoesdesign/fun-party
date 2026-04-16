@@ -280,7 +280,7 @@
     ============================================================ */
     .address-section {
       text-align: center;
-      padding: 24px 24px 48px;
+      padding: 24px 24px 60px;
       position: relative;
       z-index: 3;
     }
@@ -353,7 +353,7 @@
        PHOTO COLLAGE + BIO
     ============================================================ */
     .bio-section {
-      padding: 64px 0px 80px;
+      padding: 54px 0px 80px;
       position: relative;
       overflow: hidden;
     }
@@ -509,21 +509,21 @@
 
     .info-note {
       font-family: var(--font-body);
-      font-size: clamp(11px, 1.1vw, 16px);
+      font-size: clamp(14px, 1.1vw, 16px);
       letter-spacing: 0.06em;
       text-transform: uppercase;
       line-height: 1.8;
-      color: var(--red);
+      color: var(--blue);
     }
 
-    .note-label { color: var(--blue); }
+    .note-label { color: var(--red); }
 
     .postit-card {
       position: relative;
       background-image: url('post it 1.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
-      padding: 17% 13% 12%;
+      padding: 35% 13% 20%;
       width: 100%;
       max-width: 575px;
     }
@@ -550,12 +550,12 @@
 
     .postit-list li {
       font-family: var(--font-body);
-      font-size: clamp(13px, 1.25vw, 18px);
+      font-size: clamp(14px, 1.25vw, 18px);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      line-height: 1.5;
-      display: flex;
-      align-items: baseline;
+      line-height: 1.25;
+      display: grid;
+      grid-template-columns: auto 1fr;
       gap: 0.5em;
     }
 
@@ -570,7 +570,6 @@
     .postit-card.blue .postit-list li,
     .postit-card.blue .postit-list li::before { color: var(--blue); }
 
-    .postit-check { margin-left: 0.15em; }
 
 
     /* ============================================================
@@ -1155,6 +1154,15 @@
 
       .info-grid { grid-template-columns: 1fr; }
 
+      .info-notes { display: flex; flex-direction: column; gap: 14px; }
+      .note-label { display: block; }
+      .note-value  { display: block; }
+
+      .postit-card {
+        width: calc(100% + 80px);
+        max-width: none;
+      }
+
       .photo-collage { flex-wrap: nowrap; }
 
       .band { height: 60px; }
@@ -1291,13 +1299,13 @@
         <div class="postit-card red">
           <div class="postit-title">What's Happening</div>
           <ul class="postit-list">
-            <li>BBQ, Cake, &amp; Cold Drinks <span class="postit-check">✓</span></li>
-            <li>Pool &amp; Hot Tub <span class="postit-check">✓</span></li>
-            <li>Fun &amp; Games <span class="postit-check">✓</span></li>
-            <li>Music, Karaoke, &amp; Dancing <span class="postit-check">✓</span></li>
-            <li>Flower Bar <span class="postit-check">✓</span> (For the Mamas)</li>
-            <li>Photo Moments <span class="postit-check">✓</span></li>
-            <li>Surprise Intact <span class="postit-check">✓</span></li>
+            <li>BBQ, Cake, &amp; Cold Drinks ✓</li>
+            <li>Pool &amp; Hot Tub ✓</li>
+            <li>Fun &amp; Games ✓</li>
+            <li>Music, Karaoke, &amp; Dancing ✓</li>
+            <li>Flower Bar ✓ (For the Mamas)</li>
+            <li>Photo Moments ✓</li>
+            <li>Surprise Intact ✓</li>
           </ul>
         </div>
       </div>
@@ -1314,8 +1322,8 @@
         </div>
       </div>
       <div class="info-notes">
-        <p class="info-note"><span class="note-label">Upon arrival:</span> park in the driveway or side yard</p>
-        <p class="info-note"><span class="note-label">Questions?</span> contact nicole. (734) 363-5432</p>
+        <p class="info-note"><span class="note-label">Upon arrival:</span><span class="note-value"> park in the driveway or side yard</span></p>
+        <p class="info-note"><span class="note-label">Questions?</span><span class="note-value"> Contact Nicole: (734) 363-5432</span></p>
       </div>
     </div>
   </section>
