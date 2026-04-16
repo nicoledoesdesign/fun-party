@@ -529,10 +529,12 @@
     }
 
     .postit-title {
-      font-family: var(--font-script);
+      font-family: var(--font-heading);
+      font-style: italic;
       font-size: clamp(28px, 4vw, 55px);
       line-height: 1.1;
       margin-bottom: 0.6em;
+      text-align: center;
     }
 
     .postit-card.red .postit-title { color: var(--red); }
@@ -543,6 +545,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.55em;
+      text-align: left;
     }
 
     .postit-list li {
@@ -1152,9 +1155,7 @@
 
       .info-grid { grid-template-columns: 1fr; }
 
-      .photo-collage { flex-wrap: nowrap; overflow-x: scroll; padding-bottom: 8px; scrollbar-width: none; -ms-overflow-style: none; }
-      .photo-collage::-webkit-scrollbar { display: none; }
-      .photo-collage img { flex-shrink: 0; width: clamp(170px, 32vw, 170px); margin: 0 -25px; transition: none !important; opacity: 1 !important; translate: none !important; }
+      .photo-collage { flex-wrap: nowrap; }
 
       .band { height: 60px; }
       .band-text { font-size: clamp(22px, 4.5vw, 32px); }
