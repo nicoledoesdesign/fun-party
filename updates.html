@@ -158,8 +158,7 @@
       font-family: var(--font-script);
       font-size: clamp(24px, 2.2vw, 32px);
       line-height: 1;
-      color: var(--blue);
-      opacity: 0.55;
+      color: rgba(0, 88, 241, 0.55);
       margin-bottom: 48px;
     }
 
@@ -197,8 +196,7 @@
       font-size: clamp(14px, 0.9vw, 12px);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--blue);
-      opacity: 0.45;
+      color: rgba(0, 88, 241, 0.45);
       margin-bottom: 6px;
     }
 
@@ -258,7 +256,7 @@
       font-style: italic;
       font-size: clamp(18px, 2vw, 28px);
       color: var(--blue);
-      margin-bottom: 8px;
+      margin-bottom: 2px;
       display: block;
     }
     .modal-response {
@@ -266,7 +264,7 @@
       font-size: clamp(40px, 6vw, 80px);
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 32px;
+      margin-bottom: 16px;
     }
     .modal-response.yes { color: var(--blue); }
 
@@ -406,7 +404,7 @@
   <!-- UPDATES -->
   <section class="updates-page">
     <div class="updates-head"><span class="info-head-stars">★★★</span><span>updates</span><span class="info-head-stars">★★★</span></div>
-    <p class="updates-caught-up">Nothing new yet. You showed up anyway — very Aaron of you. 🤠</p>
+    <p class="updates-caught-up">Nothing new yet. You showed up anyway — very Aaron of you. <span style="opacity:1;color:initial">🤠</span></p>
 
     <div class="updates-feed">
       <div class="update-entry">
@@ -424,14 +422,14 @@
     <div class="rsvp-modal-inner">
       <button class="modal-close" id="contact-modal-close" aria-label="Close">✕</button>
       <span class="modal-label">Get in touch</span>
-      <div class="modal-response yes" style="margin-bottom:24px">Contact</div>
-      <p style="font-family:var(--font-heading);font-style:italic;font-size:clamp(15px,1.5vw,21px);color:var(--blue);opacity:0.65;margin-bottom:36px">Questions? Want to help? Just nosy?</p>
-      <div style="display:flex;flex-direction:column;gap:20px;align-items:center">
+      <div class="modal-response yes" style="margin-bottom:4px">Contact</div>
+      <p style="font-family:var(--font-script);font-size:clamp(22px,2.2vw,32px);color:rgba(0,88,241,0.65);margin-bottom:12px">Questions? Want to help? Just nosy?</p>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
         <a href="mailto:majeskedesigns@gmail.com" class="contact-link">
-          <span style="opacity:0.6;font-size:1.1em">✉</span> majeskedesigns@gmail.com
+          <span style="opacity:0.6;font-size:1.32em">✉</span> majeskedesigns@gmail.com
         </a>
         <a href="tel:7343635432" class="contact-link">
-          <span style="opacity:0.6;font-size:1.1em">☏</span> Nicole &mdash; (734) 363-5432
+          <span style="opacity:0.6;font-size:1.1em">☏</span> Nicole &nbsp;&nbsp; (734) 363-5432
         </a>
       </div>
     </div>

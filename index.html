@@ -765,7 +765,7 @@
       justify-content: center;
       gap: 0.5em;
       font-family: var(--font-display);
-      font-size: clamp(18px, 2.4vw, 36px);
+      font-size: clamp(22px, 2.4vw, 36px);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       transition: opacity 0.15s, transform 0.1s;
@@ -875,7 +875,7 @@
       font-style: italic;
       font-size: clamp(18px, 2vw, 28px);
       color: var(--blue);
-      margin-bottom: 8px;
+      margin-bottom: 2px;
       display: block;
     }
 
@@ -884,7 +884,7 @@
       font-size: clamp(40px, 6vw, 80px);
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 32px;
+      margin-bottom: 8px;
     }
 
     .modal-response.yes     { color: var(--red); }
@@ -1025,14 +1025,14 @@
     }
 
     .footer-top {
-      padding: 32px 40px 28px;
+      padding: 18px 40px;
       text-align: center;
       background: var(--red);
     }
 
     .footer-nav {
       font-family: var(--font-body);
-      font-size: clamp(13px, 1.2vw, 18px);
+      font-size: clamp(10px, 1.8vw, 18px);
       color: var(--white);
       letter-spacing: 0.04em;
     }
@@ -1043,10 +1043,10 @@
 
     .footer-disclaimer {
       background: var(--white);
-      padding: 10px 40px;
+      padding: 20px 40px;
       text-align: center;
       font-family: var(--font-body);
-      font-size: clamp(11px, 1vw, 15px);
+      font-size: clamp(12px, 1vw, 15px);
       color: var(--blue);
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -1057,7 +1057,7 @@
 
     @media (max-width: 680px) {
       .disclaimer-label,
-      .disclaimer-part { display: block; line-height: 1.5; }
+      .disclaimer-part { display: block; line-height: 1.25; }
     }
 
     /* footer event name stars — Figma: fill #F02300, white drop shadow */
@@ -1073,8 +1073,8 @@
     /* triple-line footer divider — Hardboiled brush SVG */
     .footer-double-rule {
       width: 68%;
-      margin: 12px auto 0;
-      height: 20px;
+      margin: 8px auto 0;
+      height: 30px;
       background-image: url('triple line footer.svg');
       background-size: 100% auto;
       background-repeat: no-repeat;
@@ -1089,14 +1089,14 @@
     .footer-event-name {
       font-family: var(--font-heading);
       font-style: italic;
-      font-size: clamp(22px, 2.7vw, 41px);
+      font-size: clamp(28px, 2.7vw, 41px);
       color: var(--white);
-      margin-bottom: 2px;
+      margin-bottom: 0px;
     }
 
     .footer-date {
       font-family: var(--font-display);
-      font-size: clamp(14px, 2.1vw, 32px);
+      font-size: clamp(16px, 2.1vw, 32px);
       color: var(--white);
       text-transform: uppercase;
       margin-bottom: 2px;
@@ -1105,14 +1105,15 @@
     .footer-at, .footer-in {
       font-family: var(--font-heading);
       font-style: italic;
-      font-size: 0.6em;
+      font-size: 0.7em;
       vertical-align: middle;
       text-transform: none;
+      margin-right: 4px;
     }
 
     .footer-addr {
       font-family: var(--font-display);
-      font-size: clamp(14px, 2.1vw, 32px);
+      font-size: clamp(16px, 2.1vw, 32px);
       color: var(--white);
       text-transform: uppercase;
       display: block;
@@ -1184,6 +1185,7 @@
       .star-pos.bl, .star-pos.br { bottom: 39px; }
 
       .footer-top { padding: 14px 24px; }
+      .footer-double-rule { width: 90%; }
 
       .footer-date { font-size: 20px; }
       .footer-addr { font-size: 20px; }
@@ -1430,14 +1432,14 @@
     <div class="rsvp-modal-inner" style="text-align:center">
       <button class="modal-close" id="contact-modal-close" aria-label="Close">✕</button>
       <span class="modal-label">Get in touch</span>
-      <div class="modal-response yes" style="margin-bottom:24px">Contact</div>
-      <p style="font-family:var(--font-heading);font-style:italic;font-size:clamp(15px,1.5vw,21px);color:var(--blue);opacity:0.65;margin-bottom:36px">Questions? Want to help? Just nosy?</p>
-      <div style="display:flex;flex-direction:column;gap:20px;align-items:center">
+      <div class="modal-response yes" style="margin-bottom:4px">Contact</div>
+      <p style="font-family:var(--font-script);font-size:clamp(28px,2.2vw,34px);color:rgba(0,88,241,0.65);margin-bottom:12px">Questions? Want to help? Just nosy?</p>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
         <a href="mailto:majeskedesigns@gmail.com" class="contact-link" style="font-family:var(--font-body);font-size:clamp(14px,1.4vw,20px);color:var(--blue);display:flex;align-items:center;gap:12px;border-bottom:2px solid transparent;padding-bottom:4px;transition:border-color 0.15s">
-          <span style="opacity:0.6;font-size:1.1em">✉</span> majeskedesigns@gmail.com
+          <span style="opacity:0.6;font-size:1.32em">✉</span> majeskedesigns@gmail.com
         </a>
         <a href="tel:7343635432" class="contact-link" style="font-family:var(--font-body);font-size:clamp(14px,1.4vw,20px);color:var(--blue);display:flex;align-items:center;gap:12px;border-bottom:2px solid transparent;padding-bottom:4px;transition:border-color 0.15s">
-          <span style="opacity:0.6;font-size:1.1em">☏</span> Nicole &mdash; (734) 363-5432
+          <span style="opacity:0.6;font-size:1.1em">☏</span> Nicole &nbsp;&nbsp; (734) 363-5432
         </a>
       </div>
     </div>
@@ -1541,12 +1543,11 @@
               ? "Got it — we'll be in touch as it gets closer. 🤠"
               : "Thanks — we'll see you there! 🤠";
 
-            const gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Aaron%27s+40th+%28Surprise%29+Rodeo&dates=20260509T150000%2F20260509T190000&details=Surprise+party+for+Aaron%27s+40th+birthday%21&location=1002+S.+Lancaster%2C+Moulton%2C+TX+77975';
+            const gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Aaron%27s+40th+%28Surprise%29+Rodeo&dates=20260509T150000&details=Surprise+party+for+Aaron%27s+40th+birthday%21&location=1002+S.+Lancaster%2C+Moulton%2C+TX+77975';
             const icsContent = [
               'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Aarons Party//EN',
               'BEGIN:VEVENT',
               'DTSTART:20260509T150000',
-              'DTEND:20260509T190000',
               'SUMMARY:Aaron\'s 40th (Surprise) Rodeo',
               'LOCATION:1002 S. Lancaster\\, Moulton\\, TX 77975',
               'DESCRIPTION:Surprise party for Aaron\'s 40th birthday!',
@@ -1561,7 +1562,7 @@
                 <a href="${icsUrl}" download="aarons-40th.ics" class="cal-btn">+ Apple / iCal</a>
               </div>` : '';
 
-            form.innerHTML = `<p style="font-family:var(--font-script);font-size:clamp(18px,2.2vw,30px);color:var(--blue);margin-top:16px;text-align:center">${thankYou}</p>${calButtons}<p style="font-family:var(--font-body);font-size:13px;color:var(--blue);opacity:0.5;margin-top:14px;text-align:center;letter-spacing:0.04em">Changed your mind? Submit again or text Nicole.</p>`;
+            form.innerHTML = `<p style="font-family:var(--font-script);font-size:clamp(27px,3.3vw,45px);color:var(--blue);margin-top:8px;text-align:center">${thankYou}</p>${calButtons}<p style="font-family:var(--font-body);font-size:13px;color:var(--blue);opacity:0.5;margin-top:14px;text-align:center;letter-spacing:0.04em">Changed your mind? Submit again or text Nicole.</p>`;
             submitBtn.style.display = 'none';
           } else {
             alert('Something went wrong — just text Nicole at (734) 363-5432!');
