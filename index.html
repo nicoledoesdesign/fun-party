@@ -97,16 +97,18 @@
       font-size: 13px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      text-align: center;
-      padding: 10px 20px;
+      position: relative;
+      height: 37px;
+      overflow: hidden;
+    }
+
+    /* bounce phase — centered */
+    #banner-bounce-phase {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
-    }
-
-    .surprise-banner .star {
-      font-size: clamp(12px, 1.3vw, 18px);
     }
 
     @keyframes banner-pop {
@@ -120,10 +122,46 @@
       100% { transform: scale(1); }
     }
 
-    .surprise-banner-text {
-      display: inline-block;
+    .banner-bounce-text {
       white-space: nowrap;
-      animation: banner-pop 2.4s ease-out 0.3s both;
+    }
+
+    .banner-bounce-text.pop {
+      animation: banner-pop 3.6s ease-out 0s both;
+    }
+
+    /* ticker phase */
+    #banner-ticker-phase {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    .ticker-seg { padding: 0 2px; }
+    .ticker-sep { padding: 0 20px; opacity: 0.6; }
+
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes vanishOut {
+      0%   { opacity: 1; transform-origin: 50% 50%; transform: scale(1);   filter: blur(0px); }
+      100% { opacity: 0; transform-origin: 50% 50%; transform: scale(2,2); filter: blur(20px); }
+    }
+
+    @keyframes vanishIn {
+      0%   { opacity: 0; transform-origin: 50% 50%; transform: scale(2,2); filter: blur(90px); }
+      100% { opacity: 1; transform-origin: 50% 50%; transform: scale(1);   filter: blur(0px); }
     }
 
     /* hamburger — hidden on desktop */
@@ -244,7 +282,7 @@
        relative to the photo's bounding box (340 × 461 px).
     ============================================================ */
     .see-yall {
-      padding: 0px 0 0;
+      padding: 0px 0 40px;
       /* let absolute children bleed horizontally */
       overflow: visible;
     }
@@ -284,40 +322,29 @@
       font-family: var(--font-heading);
       font-style: italic;
       font-size: clamp(44px, 7.3vw, 110px);
-      color: var(--blue);
+      color: var(--red);
       line-height: 1;
       white-space: nowrap;
-      /* blurred glow backing makes type readable over the photo */
-      padding: 0.04em 0.1em;
-      background: rgba(255, 252, 247, 0.25);
-      box-shadow: 0 0 14px 8px rgba(255, 252, 247, 0.25);
-      /* animation: sy-wiggle 6s ease-in-out infinite; */
     }
-    /* .sy-yall  { animation-delay: -1s; } */
-    /* .sy-there { animation-delay: -2s; } */
 
-    /* "See" — Figma: 5.9 % from photo top, right edge 0.64 em into photo */
     .sy-see {
       position: absolute;
-      right: calc(100% - 0.64em);
-      top: 5.9%;
+      right: calc(85% + 0.3em);
+      top: 25%;
       z-index: 2;
     }
 
-    /* "Y'all" — Figma: 33.6 % from photo top, left edge 0.58 em into photo */
     .sy-yall {
       position: absolute;
-      left: calc(100% - 1.1em);
-      top: 33.6%;
+      left: calc(100% - 0.5em);
+      top: 50%;
       z-index: 2;
     }
 
-    /* "There!" — overlaps the bottom of the photo */
     .sy-there {
-      display: block;
-      text-align: center;
-      margin-top: -0.55em;
-      position: relative;
+      position: absolute;
+      left: -10%;
+      top: 89%;
       z-index: 2;
     }
 
@@ -1246,8 +1273,13 @@
     </div>
     <a href="#rsvp" class="nav-rsvp" id="nav-rsvp-btn">rsvp</a>
   </nav>
-  <div class="surprise-banner">
-    <span class="surprise-banner-text">This is a surprise. Do not tell Aaron.</span>
+  <div class="surprise-banner" id="surprise-banner">
+    <div id="banner-bounce-phase">
+      <span class="banner-bounce-text pop" id="banner-bounce-text">This is a surprise. Do not tell Aaron.</span>
+    </div>
+    <div id="banner-ticker-phase">
+      <div class="ticker-track" id="ticker-track"></div>
+    </div>
   </div>
 
   <!-- ============================================================
@@ -1281,11 +1313,11 @@
   <section class="see-yall">
     <div class="sy-stage">
       <div class="sy-photo-wrap">
-        <img src="aaron-main-01.png" alt="" class="sy-photo">
+        <img src="ak-card.png" alt="" class="sy-photo">
         <span class="sy-see">See</span>
         <span class="sy-yall">Y'all</span>
+        <span class="sy-there">There!</span>
       </div>
-      <span class="sy-there">There!</span>
     </div>
   </section>
 
@@ -1741,6 +1773,55 @@
       fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
       fire(0.1,  { spread: 120, startVelocity: 45 });
     }, 300);
+
+    // Banner: bounce → vanishOut → vanishIn → continuous ticker
+    (function() {
+      var bouncePhase = document.getElementById('banner-bounce-phase');
+      var bounceText  = document.getElementById('banner-bounce-text');
+      var tickerPhase = document.getElementById('banner-ticker-phase');
+      var tickerTrack = document.getElementById('ticker-track');
+
+      var msgs = [
+        'If you spoil this, you\u2019re on balloon duty. Alone.',
+        'Do not text Aaron. We know you\u2019re thinking about it.',
+        'Yes, this includes that \u201ccasual\u201d mention you were about to make.',
+        'You. Yeah you. Don\u2019t say anything.',
+        'Seriously. Keep it a secret\u2026 this is not a suggestion\u2026 We\u2019re begging, but also threatening.',
+        'Ruin the surprise and we replace your cake slice with celery.'
+      ];
+
+      // Build ticker content (duplicated for seamless loop)
+      var seg = msgs.map(function(m) {
+        return '<span class="ticker-seg">' + m + '</span><span class="ticker-sep">\u2605</span>';
+      }).join('');
+      tickerTrack.innerHTML = seg + seg;
+
+      var VANISH_OUT = 1200;  // ms for bounce to dissolve out
+      var VANISH_IN  = 1000;  // ms for ticker to materialise in
+      var OVERLAP    = 200;   // ms vanishIn starts before vanishOut finishes
+
+      // After bounce settles, vanishOut the text
+      setTimeout(function() {
+        bounceText.style.animation = 'vanishOut ' + VANISH_OUT + 'ms ease both';
+
+        // Start vanishIn slightly before vanishOut finishes
+        setTimeout(function() {
+          bouncePhase.style.display = 'none';
+          tickerPhase.style.display = 'flex';
+          tickerPhase.style.animation = 'vanishIn ' + VANISH_IN + 'ms ease both';
+
+          // Once vanishIn completes, hand off to scroll animation
+          setTimeout(function() {
+            tickerPhase.style.animation = '';
+            requestAnimationFrame(function() {
+              var halfW = tickerTrack.scrollWidth / 2;
+              tickerTrack.style.animation = 'ticker-scroll ' + (halfW / 38).toFixed(1) + 's linear infinite';
+            });
+          }, VANISH_IN);
+
+        }, VANISH_OUT - OVERLAP);
+      }, 6500);
+    })();
   </script>
 
 </body>
