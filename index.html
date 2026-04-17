@@ -73,10 +73,10 @@
     .nav-links a:hover { opacity: 0.65; }
 
     .nav-rsvp {
-      background: var(--red);
-      color: var(--white);
+      background: var(--white);
+      color: var(--red);
       font-family: var(--font-body);
-      font-size: clamp(14px, 1.6vw, 24px);
+      font-size: 16px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       width: clamp(90px, 19vw, 289px);
@@ -85,11 +85,46 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-left: 5px solid var(--white);
       transition: opacity 0.15s;
     }
 
     .nav-rsvp:hover { opacity: 0.9; }
+
+    .surprise-banner {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .surprise-banner .star {
+      font-size: clamp(12px, 1.3vw, 18px);
+    }
+
+    @keyframes banner-pop {
+      0%   { transform: scale(1); }
+      25%  { transform: scale(1.15); }
+      50%  { transform: scale(0.96); }
+      65%  { transform: scale(1.06); }
+      78%  { transform: scale(0.98); }
+      88%  { transform: scale(1.03); }
+      95%  { transform: scale(0.995); }
+      100% { transform: scale(1); }
+    }
+
+    .surprise-banner-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: banner-pop 2.4s ease-out 0.3s both;
+    }
 
     /* hamburger — hidden on desktop */
     .nav-hamburger {
@@ -166,9 +201,9 @@
     .hero-date .at {
       font-family: var(--font-heading);
       font-style: italic;
-      font-size: clamp(14px, 2.6vw, 40px);  /* Figma: Quimby Gubernatorial 40px */
+      font-size: clamp(16px, 2.6vw, 40px);  /* Figma: Quimby Gubernatorial 40px */
       color: var(--blue);
-      margin-left: -5px;   /* nudge left */
+      margin-left: -4px;   /* nudge left */
       margin-right: 5px;   /* a hair more air before 3pm */
     }
 
@@ -177,7 +212,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      line-height: 0.9;
+      line-height: 1;
     }
 
     .h-aaron, .h-40, .h-rodeo {
@@ -186,14 +221,14 @@
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: -0.01em;
-      line-height: 0.9;
+      line-height: 1;
       display: block;
     }
 
     .h-surprise {
       font-family: var(--font-script);
-      font-size: clamp(18px, 3.1vw, 47px);
-      color: var(--blue);
+      font-size: clamp(20px, 3.1vw, 55px);
+      color: var(--red);
       display: block;
       line-height: 1.1;
       margin: 2px 0;
@@ -1211,6 +1246,9 @@
     </div>
     <a href="#rsvp" class="nav-rsvp" id="nav-rsvp-btn">rsvp</a>
   </nav>
+  <div class="surprise-banner">
+    <span class="surprise-banner-text">This is a surprise. Do not tell Aaron.</span>
+  </div>
 
   <!-- ============================================================
        HERO
@@ -1224,7 +1262,7 @@
     </div>
 
     <div class="hero-date">
-      <span class="hero-date-word">May 9th, 2026</span>
+      <span class="hero-date-word">Saturday, May 9th</span>
       <span class="at">at</span>
       <span class="hero-date-word">3pm</span>
     </div>
@@ -1682,6 +1720,27 @@
         if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+    setTimeout(function() {
+      var count = 200;
+      var defaults = {
+        origin: { y: 0.7 },
+        colors: ['#D93025', '#FFFFFF', '#2B4ECC']
+      };
+
+      function fire(particleRatio, opts) {
+        confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
+      }
+
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2,  { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1,  { spread: 120, startVelocity: 45 });
+    }, 300);
   </script>
 
 </body>
