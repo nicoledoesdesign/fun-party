@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aaron's 40th Rodeo</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤠</text></svg>">
 
   <!-- Adobe Fonts: veneer, verveine, quimby-gubernatorial, neuzon -->
   <link rel="stylesheet" href="https://use.typekit.net/yiw4fvk.css">
@@ -43,15 +44,19 @@
     /* ============================================================
        NAV
     ============================================================ */
+    .nav-sticky-group {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
     .site-nav {
       background: var(--blue);
       height: 58px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: relative;
     }
 
     .nav-links {
@@ -1260,6 +1265,7 @@
   <!-- ============================================================
        NAV
   ============================================================ -->
+  <div class="nav-sticky-group">
   <nav class="site-nav" id="home">
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -1281,6 +1287,7 @@
       <div class="ticker-track" id="ticker-track"></div>
     </div>
   </div>
+  </div><!-- /.nav-sticky-group -->
 
   <!-- ============================================================
        HERO
@@ -1582,7 +1589,10 @@
 
       // open on button click
       document.querySelectorAll('.rsvp-btn').forEach(btn => {
-        btn.addEventListener('click', () => openModal(btn.dataset.response));
+        btn.addEventListener('click', () => {
+          openModal(btn.dataset.response);
+          if (btn.dataset.response === 'yes' && typeof fireConfetti === 'function') fireConfetti();
+        });
       });
 
       // close on X or backdrop click
@@ -1756,32 +1766,32 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script>
-    setTimeout(function() {
+    function fireConfetti() {
       var count = 200;
       var defaults = {
         origin: { y: 0.7 },
         colors: ['#D93025', '#FFFFFF', '#2B4ECC']
       };
-
       function fire(particleRatio, opts) {
         confetti({ ...defaults, ...opts, particleCount: Math.floor(count * particleRatio) });
       }
-
       fire(0.25, { spread: 26, startVelocity: 55 });
       fire(0.2,  { spread: 60 });
       fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
       fire(0.1,  { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
       fire(0.1,  { spread: 120, startVelocity: 45 });
-    }, 300);
+    }
 
-    // Banner: bounce → vanishOut → vanishIn → continuous ticker
+    setTimeout(fireConfetti, 300);
+
+    // Banner: bounce → vanishOut → ticker scrolls in from right
     (function() {
       var bouncePhase = document.getElementById('banner-bounce-phase');
       var bounceText  = document.getElementById('banner-bounce-text');
       var tickerPhase = document.getElementById('banner-ticker-phase');
       var tickerTrack = document.getElementById('ticker-track');
 
-      var msgs = [
+      var warningMsgs = [
         'If you spoil this, you\u2019re on balloon duty. Alone.',
         'Do not text Aaron. We know you\u2019re thinking about it.',
         'Yes, this includes that \u201ccasual\u201d mention you were about to make.',
@@ -1790,34 +1800,55 @@
         'Ruin the surprise and we replace your cake slice with celery.'
       ];
 
-      // Build ticker content (duplicated for seamless loop)
-      var seg = msgs.map(function(m) {
-        return '<span class="ticker-seg">' + m + '</span><span class="ticker-sep">\u2605</span>';
-      }).join('');
-      tickerTrack.innerHTML = seg + seg;
+      var fullMsgs = ['This is a surprise. Do not tell Aaron.'].concat(warningMsgs);
 
-      var VANISH_OUT = 1200;  // ms for bounce to dissolve out
-      var VANISH_IN  = 1000;  // ms for ticker to materialise in
-      var OVERLAP    = 200;   // ms vanishIn starts before vanishOut finishes
+      function buildSeg(msgs) {
+        return msgs.map(function(m) {
+          return '<span class="ticker-seg">' + m + '</span><span class="ticker-sep">\u2605</span>';
+        }).join('');
+      }
 
-      // After bounce settles, vanishOut the text
+      tickerTrack.innerHTML = buildSeg(warningMsgs) + buildSeg(warningMsgs);
+
+      var VANISH_OUT = 1200;
+      var OVERLAP    = 200;
+
       setTimeout(function() {
         bounceText.style.animation = 'vanishOut ' + VANISH_OUT + 'ms ease both';
 
-        // Start vanishIn slightly before vanishOut finishes
         setTimeout(function() {
           bouncePhase.style.display = 'none';
-          tickerPhase.style.display = 'flex';
-          tickerPhase.style.animation = 'vanishIn ' + VANISH_IN + 'ms ease both';
 
-          // Once vanishIn completes, hand off to scroll animation
-          setTimeout(function() {
-            tickerPhase.style.animation = '';
-            requestAnimationFrame(function() {
-              var halfW = tickerTrack.scrollWidth / 2;
-              tickerTrack.style.animation = 'ticker-scroll ' + (halfW / 38).toFixed(1) + 's linear infinite';
-            });
-          }, VANISH_IN);
+          var pos = window.innerWidth;
+          tickerTrack.style.transform = 'translateX(' + pos + 'px)';
+          tickerPhase.style.display = 'flex';
+
+          var halfW = null;
+          var SPEED = 28; // px/s
+          var lastTime = null;
+          var firstLoopDone = false;
+
+          function step(ts) {
+            if (!lastTime) lastTime = ts;
+            var dt = (ts - lastTime) / 1000;
+            lastTime = ts;
+            pos -= SPEED * dt;
+            if (!halfW) halfW = tickerTrack.scrollWidth / 2;
+            if (pos <= -halfW) {
+              if (!firstLoopDone) {
+                // Rebuild with "This is a surprise." as first message and restart
+                firstLoopDone = true;
+                tickerTrack.innerHTML = buildSeg(fullMsgs) + buildSeg(fullMsgs);
+                halfW = null;
+                pos = 0;
+              } else {
+                pos += halfW;
+              }
+            }
+            tickerTrack.style.transform = 'translateX(' + pos + 'px)';
+            requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
 
         }, VANISH_OUT - OVERLAP);
       }, 6500);
