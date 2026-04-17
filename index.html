@@ -1589,10 +1589,7 @@
 
       // open on button click
       document.querySelectorAll('.rsvp-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          openModal(btn.dataset.response);
-          if (btn.dataset.response === 'yes' && typeof fireConfetti === 'function') fireConfetti();
-        });
+        btn.addEventListener('click', () => openModal(btn.dataset.response));
       });
 
       // close on X or backdrop click
@@ -1644,6 +1641,7 @@
 
             form.innerHTML = `<p style="font-family:var(--font-script);font-size:clamp(27px,3.3vw,45px);color:var(--blue);margin-top:8px;text-align:center">${thankYou}</p>${calButtons}<p style="font-family:var(--font-body);font-size:13px;color:var(--blue);opacity:0.5;margin-top:14px;text-align:center;letter-spacing:0.04em">Changed your mind? Submit again or text Nicole.</p>`;
             submitBtn.style.display = 'none';
+            if (response === 'yes' && typeof fireConfetti === 'function') fireConfetti();
           } else {
             alert('Something went wrong — just text Nicole at (734) 363-5432!');
           }
@@ -1824,7 +1822,7 @@
           tickerPhase.style.display = 'flex';
 
           var halfW = null;
-          var SPEED = 28; // px/s
+          var SPEED = 34; // px/s
           var lastTime = null;
           var firstLoopDone = false;
 
