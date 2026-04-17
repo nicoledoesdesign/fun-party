@@ -209,7 +209,7 @@
        relative to the photo's bounding box (340 × 461 px).
     ============================================================ */
     .see-yall {
-      padding: 20px 0 0;
+      padding: 0px 0 0;
       /* let absolute children bleed horizontally */
       overflow: visible;
     }
@@ -232,9 +232,17 @@
 
     .sy-photo {
       display: block;
-      width: clamp(150px, 22vw, 310px);
+      width: clamp(180px, 26.4vw, 372px);
       position: relative;
       z-index: 1;
+      transform-origin: bottom center;
+    }
+
+    @keyframes sy-wiggle {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      10%, 20% { transform: scale(0.95) rotate(-3deg); }
+      30%, 50%, 70%, 90% { transform: scale(1.05) rotate(3deg); }
+      40%, 60%, 80%      { transform: scale(1.05) rotate(-3deg); }
     }
 
     .sy-see, .sy-yall, .sy-there {
@@ -246,9 +254,12 @@
       white-space: nowrap;
       /* blurred glow backing makes type readable over the photo */
       padding: 0.04em 0.1em;
-      background: rgba(255, 252, 247, 0.62);
-      box-shadow: 0 0 28px 18px rgba(255, 252, 247, 0.62);
+      background: rgba(255, 252, 247, 0.25);
+      box-shadow: 0 0 14px 8px rgba(255, 252, 247, 0.25);
+      /* animation: sy-wiggle 6s ease-in-out infinite; */
     }
+    /* .sy-yall  { animation-delay: -1s; } */
+    /* .sy-there { animation-delay: -2s; } */
 
     /* "See" — Figma: 5.9 % from photo top, right edge 0.64 em into photo */
     .sy-see {
@@ -261,7 +272,7 @@
     /* "Y'all" — Figma: 33.6 % from photo top, left edge 0.58 em into photo */
     .sy-yall {
       position: absolute;
-      left: calc(100% - 0.58em);
+      left: calc(100% - 1.1em);
       top: 33.6%;
       z-index: 2;
     }
@@ -407,7 +418,7 @@
 
     .bio-heading {
       font-family: var(--font-display);
-      font-size: clamp(30px, 3.1vw, 46px);
+      font-size: clamp(28px, 3.1vw, 46px);
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
@@ -509,10 +520,10 @@
 
     .info-note {
       font-family: var(--font-body);
-      font-size: clamp(14px, 1.1vw, 16px);
+      font-size: clamp(13px, 1.1vw, 16px);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      line-height: 1.8;
+      line-height: 1.2;
       color: var(--blue);
     }
 
@@ -523,7 +534,7 @@
       background-image: url('post it 1.png');
       background-size: 100% 100%;
       background-repeat: no-repeat;
-      padding: 35% 13% 20%;
+      padding: 25% 13% 10%;
       width: 100%;
       max-width: 575px;
     }
@@ -533,7 +544,7 @@
       font-style: italic;
       font-size: clamp(28px, 4vw, 55px);
       line-height: 1.1;
-      margin-bottom: 0.6em;
+      margin-bottom: 0.25em;
       text-align: center;
     }
 
@@ -550,10 +561,10 @@
 
     .postit-list li {
       font-family: var(--font-body);
-      font-size: clamp(14px, 1.25vw, 18px);
+      font-size: clamp(13px, 1.25vw, 18px);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      line-height: 1.25;
+      line-height: 1;
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 0.5em;
@@ -726,7 +737,7 @@
 
     .rsvp-head {
       font-family: var(--font-display);
-      font-size: clamp(28px, 4.1vw, 63px);
+      font-size: clamp(28px, 4.1vw, 46px);
       color: var(--blue);
       text-transform: uppercase;
       letter-spacing: 0.02em;
@@ -1230,7 +1241,7 @@
   <section class="see-yall">
     <div class="sy-stage">
       <div class="sy-photo-wrap">
-        <img src="figma-aaron.png" alt="" class="sy-photo">
+        <img src="aaron-main-01.png" alt="" class="sy-photo">
         <span class="sy-see">See</span>
         <span class="sy-yall">Y'all</span>
       </div>
